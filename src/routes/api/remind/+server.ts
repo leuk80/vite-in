@@ -26,6 +26,10 @@ export async function POST({ request }) {
 
   const withEmail = rsvps?.filter(r => r.email) || []
 
+  console.log('rsvps found:', rsvps?.length)
+console.log('with email:', withEmail.length)
+console.log('withEmail data:', JSON.stringify(withEmail))
+
   if (withEmail.length === 0) {
     return json({ error: 'Keine Gäste mit E-Mail Adresse.' }, { status: 400 })
   }

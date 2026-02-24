@@ -15,6 +15,7 @@ const { error } = await supabase.from('rsvps').insert({
   message,
   email
 })
+
   if (error) {
     return json({ success: false }, { status: 500 })
   }
