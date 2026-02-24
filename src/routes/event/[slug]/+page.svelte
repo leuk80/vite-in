@@ -58,6 +58,32 @@ async function handleRSVP() {
 
   loading = false
 }
+
+function downloadICS() {
+  const start = new Date(event.date).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+  const end = new Date(new Date(event.date).getTime() + 2 * 60 * 60 * 1000)
+    .toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    `SUMMARY:${event.title}`,
+    `DTSTART:${start}`,
+    `DTEND:${end}`,
+    `LOCATION:${event.location || ''}`,
+    `DESCRIPTION:${event.description || ''}`,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\n')
+
+  const blob = new Blob([ics], { type: 'text/calendar' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${event.title}.ics`
+  a.click()
+}
 </script>
 
 {#if notFound}
@@ -74,7 +100,9 @@ async function handleRSVP() {
     {#if event.description}
       <p class="description">{event.description}</p>
     {/if}
-
+    <button class="calendar-btn" on:click={downloadICS}>
+      📅 Zum Kalender hinzufügen
+    </button>
     <div class="divider"></div>
 
     {#if submitted}
@@ -167,4 +195,15 @@ async function handleRSVP() {
   .success { color: green; font-size: 1.1rem; }
   .rsvp-item { padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; }
   .rsvp-message { color: #666; font-size: 0.9rem; margin: 0.2rem 0 0 1.5rem; }
+
+  .calendar-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.calendar-btn:hover { border-color: black; }
 </style>
