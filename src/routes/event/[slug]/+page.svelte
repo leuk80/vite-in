@@ -69,8 +69,7 @@
     const res = await fetch('/api/rsvp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event_id: event.id, name, status, message })
-    })
+body: JSON.stringify({ event_id: event.id, name, status, message, email: rsvpEmail })    })
     if (res.ok) {
       submitted = true
       rsvps = [...rsvps, { name, status, message }]
