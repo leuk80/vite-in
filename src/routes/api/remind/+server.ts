@@ -34,6 +34,8 @@ console.log('withEmail data:', JSON.stringify(withEmail))
     return json({ error: 'Keine Gäste mit E-Mail Adresse.' }, { status: 400 })
   }
 
+  console.log('starting loop, count:', withEmail.length)
+
 for (const rsvp of withEmail) {
     const result = await resend.emails.send({
       from: 'vite.in <onboarding@resend.dev>',
