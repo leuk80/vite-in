@@ -91,6 +91,49 @@ function shareWhatsApp() {
 }
 
 let upgradeLoading = false
+let showSlugModal = false
+let newSlug = ''
+let slugError = ''
+let slugLoading = false
+let slugSuccess = false
+
+onMount(async () => {
+  // bestehender onMount Code bleibt, nur ergänzen:
+  if (typeof window !== 'undefined' && window.location.search.includes('upgraded=true')) {
+    showSlugModal = true
+    window.history.replaceState({}, '', window.location.pathname)
+  }
+})
+
+async function updateSlug() {
+  slugLoading = true
+  slugError = ''
+
+  if (!/^[a-z0-9-]+$/.test(newSlug)) {
+    slugError = 'Nur Kleinbuchstaben, Zahlen und Bindestriche erlaubt.'
+    slugLoading = false
+    return
+  }
+
+  const res = await fetch('/api/update-slug', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event_id: event.id, new_slug: newSlug })
+  })
+
+  const data = await res.json()
+
+  if (data.error) {
+    slugError = data.error
+    slugLoading = false
+    return
+  }
+
+  slugSuccess = true
+  setTimeout(() => {
+    window.location.href = `/event/${newSlug}`
+  }, 1500)
+}
 
 async function startUpgrade() {
     console.log('event:', event)
@@ -112,6 +155,40 @@ async function startUpgrade() {
 {:else if !event}
   <main><p class="loading">Lädt...</p></main>
 {:else}
+
+{#if showSlugModal}
+  <div class="modal-overlay">
+    <div class="modal">
+      <h2>🎉 Upgrade erfolgreich!</h2>
+      <p>Wähle deinen persönlichen Link:</p>
+      <div class="slug-input-row">
+        <span class="slug-prefix">vite.in/event/</span>
+        <input
+          type="text"
+          bind:value={newSlug}
+          placeholder="julias-party"
+          disabled={slugLoading || slugSuccess}
+        />
+      </div>
+      {#if slugError}
+        <p class="slug-error">{slugError}</p>
+      {/if}
+      {#if slugSuccess}
+        <p class="slug-success">✅ Link gespeichert! Weiterleitung...</p>
+      {:else}
+        <div class="modal-buttons">
+          <button class="modal-skip" on:click={() => showSlugModal = false}>
+            Überspringen
+          </button>
+          <button class="modal-save" on:click={updateSlug} disabled={slugLoading || !newSlug}>
+            {slugLoading ? '...' : 'Speichern →'}
+          </button>
+        </div>
+      {/if}
+    </div>
+  </div>
+{/if}
+
   <div class="page">
     <div class="card">
       <div class="card-header">
@@ -477,5 +554,71 @@ async function startUpgrade() {
   font-family: inherit;
 }
 .upgrade-btn:hover { background: #333; }
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+}
+.modal h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+.modal p { font-size: 0.9rem; color: #555; margin-bottom: 1.2rem; }
+.slug-input-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.slug-prefix {
+  padding: 0.65rem 0.8rem;
+  background: #f5f5f5;
+  font-size: 0.85rem;
+  color: #888;
+  white-space: nowrap;
+}
+.slug-input-row input {
+  border: none;
+  border-radius: 0;
+  flex: 1;
+  padding: 0.65rem 0.8rem;
+}
+.slug-input-row input:focus { outline: none; }
+.slug-error { color: red; font-size: 0.85rem; margin-bottom: 1rem; }
+.slug-success { color: green; font-size: 0.85rem; }
+.modal-buttons { display: flex; gap: 0.5rem; justify-content: flex-end; }
+.modal-skip {
+  padding: 0.6rem 1rem;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+.modal-save {
+  padding: 0.6rem 1.2rem;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+.modal-save:disabled { opacity: 0.5; cursor: not-allowed; }
 
 </style>
