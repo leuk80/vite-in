@@ -38,7 +38,7 @@ console.log('withEmail data:', JSON.stringify(withEmail))
 
 for (const rsvp of withEmail) {
     const result = await resend.emails.send({
-      from: 'vite.in <onboarding@resend.dev>',
+      from: 'vite.in <invite@vite.in>',
       to: rsvp.email,
       subject: `Erinnerung: ${event.title}`,
       html: `
