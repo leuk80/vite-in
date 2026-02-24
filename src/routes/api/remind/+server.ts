@@ -34,8 +34,8 @@ console.log('withEmail data:', JSON.stringify(withEmail))
     return json({ error: 'Keine Gäste mit E-Mail Adresse.' }, { status: 400 })
   }
 
-  for (const rsvp of withEmail) {
-    await resend.emails.send({
+for (const rsvp of withEmail) {
+    const result = await resend.emails.send({
       from: 'vite.in <onboarding@resend.dev>',
       to: rsvp.email,
       subject: `Erinnerung: ${event.title}`,
@@ -48,8 +48,7 @@ console.log('withEmail data:', JSON.stringify(withEmail))
         <p><a href="https://vite.in/event/${event.slug}">Zur Einladung</a></p>
       `
     })
-      console.log('resend result:', JSON.stringify(result))
-
+    console.log('resend result:', JSON.stringify(result))
   }
 
   return json({ success: true, sent: withEmail.length })
