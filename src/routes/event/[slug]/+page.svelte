@@ -93,6 +93,8 @@ function shareWhatsApp() {
 let upgradeLoading = false
 
 async function startUpgrade() {
+    console.log('event:', event)
+  console.log('slug:', event?.slug)
   upgradeLoading = true
   const res = await fetch('/api/checkout', {
     method: 'POST',
