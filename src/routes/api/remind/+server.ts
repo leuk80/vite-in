@@ -48,6 +48,8 @@ console.log('withEmail data:', JSON.stringify(withEmail))
         <p><a href="https://vite.in/event/${event.slug}">Zur Einladung</a></p>
       `
     })
+      console.log('resend result:', JSON.stringify(result))
+
   }
 
   return json({ success: true, sent: withEmail.length })
