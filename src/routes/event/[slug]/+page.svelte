@@ -37,17 +37,27 @@
     })
   }
 
-  async function handleRSVP() {
-    loading = true
-    await supabase.from('rsvps').insert({
+async function handleRSVP() {
+  loading = true
+
+  const res = await fetch('/api/rsvp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
       event_id: event.id,
       name,
       status,
       message
     })
+  })
+
+  if (res.ok) {
     submitted = true
-    loading = false
+    rsvps = [...rsvps, { name, status, message }]
   }
+
+  loading = false
+}
 </script>
 
 {#if notFound}
