@@ -6,16 +6,15 @@ import { supabase } from '$lib/supabase'
 const resend = new Resend(RESEND_API_KEY)
 
 export async function POST({ request }) {
-  const { event_id, name, status, message } = await request.json()
+  const { event_id, name, status, message, email } = await request.json()
 
-  // RSVP in Datenbank speichern
-  const { error } = await supabase.from('rsvps').insert({
-    event_id,
-    name,
-    status,
-    message
-  })
-
+const { error } = await supabase.from('rsvps').insert({
+  event_id,
+  name,
+  status,
+  message,
+  email
+})
   if (error) {
     return json({ success: false }, { status: 500 })
   }
