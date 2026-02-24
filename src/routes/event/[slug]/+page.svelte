@@ -11,6 +11,7 @@
   let loading = false
   let submitted = false
   let rsvps: any[] = []
+  let rsvpEmail = ''
 
   onMount(async () => {
     const { data } = await supabase
@@ -148,6 +149,32 @@ async function startUpgrade() {
   window.location.href = url
 }
 
+
+let remindLoading = false
+let remindSent = false
+let remindError = ''
+
+async function sendReminder() {
+  remindLoading = true
+  remindError = ''
+
+  const res = await fetch('/api/remind', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event_id: event.id })
+  })
+
+  const data = await res.json()
+
+  if (data.error) {
+    remindError = data.error
+  } else {
+    remindSent = true
+  }
+
+  remindLoading = false
+}
+
 </script>
 
 {#if notFound}
@@ -245,6 +272,11 @@ async function startUpgrade() {
               <input type="text" bind:value={name} required placeholder="Max Mustermann" />
             </label>
 
+            <label>
+               E-Mail <span class="optional">(für Erinnerungen)</span>
+              <input type="email" bind:value={rsvpEmail} placeholder="du@beispiel.de" />
+            </label>
+
             <div class="status-buttons">
               <button type="button" class:active={status === 'yes'} on:click={() => status = 'yes'}>
                 <span>✅</span> Ja
@@ -295,6 +327,23 @@ async function startUpgrade() {
     <button class="upgrade-btn" on:click={startUpgrade} disabled={upgradeLoading}>
       {upgradeLoading ? '...' : 'Upgrade'}
     </button>
+  </div>
+{/if}
+
+{#if event.is_paid}
+  <div class="remind-section">
+    <button class="remind-btn" on:click={sendReminder} disabled={remindLoading || remindSent}>
+      {#if remindSent}
+        ✅ Erinnerungen gesendet
+      {:else if remindLoading}
+        Wird gesendet...
+      {:else}
+        🔔 Erinnerung an Gäste senden
+      {/if}
+    </button>
+    {#if remindError}
+      <p class="remind-error">{remindError}</p>
+    {/if}
   </div>
 {/if}
 
@@ -620,5 +669,26 @@ async function startUpgrade() {
   font-family: inherit;
 }
 .modal-save:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
+.remind-section {
+  margin: 0 2rem 1.5rem;
+}
+.remind-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #444;
+  transition: all 0.15s;
+}
+.remind-btn:hover { border-color: #111; color: #111; }
+.remind-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.remind-error { font-size: 0.85rem; color: red; margin-top: 0.5rem; }
+
 
 </style>
