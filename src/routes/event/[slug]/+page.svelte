@@ -89,6 +89,20 @@ function shareWhatsApp() {
   const text = `Du bist eingeladen: ${event.title} – ${window.location.href}`
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank')
 }
+
+let upgradeLoading = false
+
+async function startUpgrade() {
+  upgradeLoading = true
+  const res = await fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event_id: event.id, slug: event.slug })
+  })
+  const { url } = await res.json()
+  window.location.href = url
+}
+
 </script>
 
 {#if notFound}
@@ -191,6 +205,19 @@ function shareWhatsApp() {
           {/each}
         </div>
       {/if}
+
+
+      {#if !event.is_paid}
+  <div class="upgrade-banner">
+    <div>
+      <p class="upgrade-title">✨ Premium – einmalig 5€</p>
+      <p class="upgrade-text">Eigener Link, kein Branding, E-Mail Erinnerung</p>
+    </div>
+    <button class="upgrade-btn" on:click={startUpgrade} disabled={upgradeLoading}>
+      {upgradeLoading ? '...' : 'Upgrade'}
+    </button>
+  </div>
+{/if}
 
       <div class="card-footer">
         <a href="/">Erstellt mit vite.in</a>
@@ -419,4 +446,31 @@ function shareWhatsApp() {
 }
 .share-btn:hover { border-color: #111; color: #111; }
 .share-btn.whatsapp:hover { border-color: #25D366; color: #25D366; }
+
+.upgrade-banner {
+  margin: 0 2rem 1.5rem;
+  padding: 1rem 1.2rem;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.upgrade-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.upgrade-text { font-size: 0.8rem; color: #888; }
+.upgrade-btn {
+  padding: 0.5rem 1.2rem;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.upgrade-btn:hover { background: #333; }
+
 </style>
