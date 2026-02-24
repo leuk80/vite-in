@@ -31,7 +31,7 @@ const { error } = await supabase.from('rsvps').insert({
     const statusText = status === 'yes' ? '✅ Zusage' : status === 'maybe' ? '🤔 Vielleicht' : '❌ Absage'
 
     await resend.emails.send({
-      from: 'vite.in <onboarding@resend.dev>',
+      from: 'vite.in <invite@vite.in>',
       to: event.creator_email,
       subject: `${statusText} von ${name} – ${event.title}`,
       html: `
