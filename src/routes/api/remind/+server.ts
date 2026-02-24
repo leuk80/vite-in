@@ -26,15 +26,11 @@ export async function POST({ request }) {
 
   const withEmail = rsvps?.filter(r => r.email) || []
 
-  console.log('rsvps found:', rsvps?.length)
-console.log('with email:', withEmail.length)
-console.log('withEmail data:', JSON.stringify(withEmail))
 
   if (withEmail.length === 0) {
     return json({ error: 'Keine Gäste mit E-Mail Adresse.' }, { status: 400 })
   }
 
-  console.log('starting loop, count:', withEmail.length)
 
 for (const rsvp of withEmail) {
     const result = await resend.emails.send({
@@ -50,7 +46,7 @@ for (const rsvp of withEmail) {
         <p><a href="https://vite.in/event/${event.slug}">Zur Einladung</a></p>
       `
     })
-    console.log('resend result:', JSON.stringify(result))
+   
   }
 
   return json({ success: true, sent: withEmail.length })
