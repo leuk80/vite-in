@@ -1,22 +1,27 @@
 <script lang="ts">
+  import * as m from '$lib/paraglide/messages'
+
+import { languageTag } from '$lib/paraglide/runtime'
+
   const features = [
-    { icon: '⚡', title: 'In Sekunden erstellt', text: 'Einladung ausfüllen, Link teilen – fertig. Kein Account nötig.' },
-    { icon: '✅', title: 'RSVP in Echtzeit', text: 'Gäste sagen direkt zu oder ab. Du bekommst sofort eine E-Mail.' },
-    { icon: '📅', title: 'Kalender-Export', text: 'Gäste können das Event mit einem Klick in ihren Kalender speichern.' },
+    { icon: '⚡', title: m.feature_1_title(), text: m.feature_1_text() },
+    { icon: '✅', title: m.feature_2_title(), text: m.feature_2_text() },
+    { icon: '📅', title: m.feature_3_title(), text: m.feature_3_text() },
   ]
 </script>
 
 <main>
   <nav>
     <span class="logo">vite.in</span>
-    <a href="/create" class="nav-cta">Einladung erstellen</a>
+    <a href="/create" class="nav-cta">{m.nav_create()}</a>
+    
   </nav>
 
   <section class="hero">
-    <h1>Einladungen,<br>die ankommen.</h1>
-    <p class="subtitle">Erstelle in Sekunden eine digitale Einladung – für Geburtstage, Firmenevents, Hochzeiten und mehr. Kein Account, kein Stress.</p>
-    <a href="/create" class="btn-primary">Jetzt kostenlos erstellen →</a>
-    <p class="hint">Dauert weniger als 2 Minuten</p>
+    <h1>{m.hero_title()}</h1>
+    <p class="subtitle">{m.hero_subtitle()}</p>
+    <a href="/create" class="btn-primary">{m.hero_cta()}</a>
+    <p class="hint">{m.hero_hint()}</p>
   </section>
 
   <section class="features">
@@ -30,8 +35,8 @@
   </section>
 
   <section class="cta-section">
-    <h2>Bereit für deine nächste Einladung?</h2>
-    <a href="/create" class="btn-primary">Einladung erstellen →</a>
+    <h2>{m.final_cta()}</h2>
+    <a href="/create" class="btn-primary">{m.hero_cta()}</a>
   </section>
 
   <footer>
@@ -149,4 +154,6 @@
     color: #999;
     font-size: 0.85rem;
   }
+
+
 </style>

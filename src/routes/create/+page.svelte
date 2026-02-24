@@ -1,6 +1,7 @@
 <script lang="ts">
   import { supabase } from '$lib/supabase'
   import { goto } from '$app/navigation'
+  import * as m from '$lib/paraglide/messages'
 
   let title = ''
   let date = ''
@@ -31,7 +32,7 @@
     })
 
     if (err) {
-      error = 'Etwas ist schiefgelaufen. Bitte versuche es erneut.'
+      error = 'Etwas ist schiefgelaufen.'
       loading = false
       return
     }
@@ -41,31 +42,31 @@
 </script>
 
 <main>
-  <h1>Einladung erstellen</h1>
+  <h1>{m.create_title()}</h1>
 
   <form on:submit|preventDefault={handleSubmit}>
     <label>
-      Titel *
+      {m.event_title()} *
       <input type="text" bind:value={title} required placeholder="Meine Geburtstagsparty" />
     </label>
 
     <label>
-      Datum *
+      {m.event_date()} *
       <input type="datetime-local" bind:value={date} required />
     </label>
 
     <label>
-      Ort
+      {m.event_location()}
       <input type="text" bind:value={location} placeholder="Musterstrasse 1, Zürich" />
     </label>
 
     <label>
-      Beschreibung
+      {m.event_description()}
       <textarea bind:value={description} placeholder="Kommt alle vorbei..."></textarea>
     </label>
 
     <label>
-      Deine E-Mail *
+      {m.your_email()} *
       <input type="email" bind:value={email} required placeholder="du@beispiel.de" />
     </label>
 
@@ -74,7 +75,7 @@
     {/if}
 
     <button type="submit" disabled={loading}>
-      {loading ? 'Wird erstellt...' : 'Einladung erstellen →'}
+      {loading ? m.creating() : m.create_btn()}
     </button>
   </form>
 </main>
