@@ -221,9 +221,12 @@ async function startUpgrade() {
   </div>
 {/if}
 
-      <div class="card-footer">
-        <a href="/">Erstellt mit vite.in</a>
-      </div>
+      {#if !event.is_paid}
+  <div class="card-footer">
+    <a href="/">Erstellt mit vite.in</a>
+  </div>
+{/if}
+
     </div>
   </div>
 {/if}
