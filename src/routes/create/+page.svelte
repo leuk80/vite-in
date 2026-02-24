@@ -46,7 +46,7 @@
   <form on:submit|preventDefault={handleSubmit}>
     <label>
       Titel *
-      <input type="text" bind:value={title} required placeholder="Julias Geburtstagsparty" />
+      <input type="text" bind:value={title} required placeholder="Meine Geburtstagsparty" />
     </label>
 
     <label>
@@ -56,7 +56,7 @@
 
     <label>
       Ort
-      <input type="text" bind:value={location} placeholder="Musterstraße 1, Berlin" />
+      <input type="text" bind:value={location} placeholder="Musterstrasse 1, Zürich" />
     </label>
 
     <label>
