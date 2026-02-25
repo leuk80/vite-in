@@ -502,3 +502,124 @@ export const nav_create = (params = {}, options = {}) => {
 	}[options.languageTag ?? languageTag()]()
 }
 
+/* @__NO_SIDE_EFFECTS__ */
+export const image_btn = (params = {}, options = {}) => {
+	return {
+		de: de.image_btn,
+		en: en.image_btn,
+		es: es.image_btn,
+		fr: fr.image_btn,
+		it: it.image_btn
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_upload = (params = {}, options = {}) => {
+	return {
+		de: de.image_tab_upload,
+		en: en.image_tab_upload,
+		es: es.image_tab_upload,
+		fr: fr.image_tab_upload,
+		it: it.image_tab_upload
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_unsplash = (params = {}, options = {}) => {
+	return {
+		de: de.image_tab_unsplash,
+		en: en.image_tab_unsplash,
+		es: es.image_tab_unsplash,
+		fr: fr.image_tab_unsplash,
+		it: it.image_tab_unsplash
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_unsplash_placeholder = (params = {}, options = {}) => {
+	return {
+		de: de.image_unsplash_placeholder,
+		en: en.image_unsplash_placeholder,
+		es: es.image_unsplash_placeholder,
+		fr: fr.image_unsplash_placeholder,
+		it: it.image_unsplash_placeholder
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_search = (params = {}, options = {}) => {
+	return {
+		de: de.image_search,
+		en: en.image_search,
+		es: es.image_search,
+		fr: fr.image_search,
+		it: it.image_search
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_save = (params = {}, options = {}) => {
+	return {
+		de: de.image_save,
+		en: en.image_save,
+		es: es.image_save,
+		fr: fr.image_save,
+		it: it.image_save
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_remove = (params = {}, options = {}) => {
+	return {
+		de: de.image_remove,
+		en: en.image_remove,
+		es: es.image_remove,
+		fr: fr.image_remove,
+		it: it.image_remove
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_saved = (params = {}, options = {}) => {
+	return {
+		de: de.image_saved,
+		en: en.image_saved,
+		es: es.image_saved,
+		fr: fr.image_saved,
+		it: it.image_saved
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_uploading = (params = {}, options = {}) => {
+	return {
+		de: de.image_uploading,
+		en: en.image_uploading,
+		es: es.image_uploading,
+		fr: fr.image_uploading,
+		it: it.image_uploading
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_searching = (params = {}, options = {}) => {
+	return {
+		de: de.image_searching,
+		en: en.image_searching,
+		es: es.image_searching,
+		fr: fr.image_searching,
+		it: it.image_searching
+	}[options.languageTag ?? languageTag()]()
+}
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_close = (params = {}, options = {}) => {
+	return {
+		de: de.image_close,
+		en: en.image_close,
+		es: es.image_close,
+		fr: fr.image_close,
+		it: it.image_close
+	}[options.languageTag ?? languageTag()]()
+}
+

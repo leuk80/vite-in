@@ -44,5 +44,16 @@
   "feature_3_title": "Export calendrier",
   "feature_3_text": "Les invités peuvent ajouter l'événement à leur calendrier en un clic.",
   "final_cta": "Prêt pour votre prochaine invitation?",
-  "nav_create": "Créer une invitation"
+  "nav_create": "Créer une invitation",
+  "image_btn": "Ajouter / changer l'image",
+  "image_tab_upload": "Télécharger",
+  "image_tab_unsplash": "Unsplash",
+  "image_unsplash_placeholder": "ex. anniversaire, fête, plage...",
+  "image_search": "Chercher",
+  "image_save": "Utiliser cette image",
+  "image_remove": "Supprimer l'image",
+  "image_saved": "Image enregistrée!",
+  "image_uploading": "Téléchargement...",
+  "image_searching": "Recherche...",
+  "image_close": "Fermer"
 }
