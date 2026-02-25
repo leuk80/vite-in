@@ -55,5 +55,12 @@
   "image_saved": "Image saved!",
   "image_uploading": "Uploading...",
   "image_searching": "Searching...",
-  "image_close": "Close"
+  "image_close": "Close",
+  "placeholder_title": "My birthday party",
+  "placeholder_location": "1 Main Street, London",
+  "placeholder_description": "Come join us...",
+  "placeholder_email": "you@example.com",
+  "placeholder_name": "John Smith",
+  "placeholder_message": "Looking forward to it!",
+  "error_generic": "Something went wrong."
 }
