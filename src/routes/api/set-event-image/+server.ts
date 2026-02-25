@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit'
 import { createClient } from '@supabase/supabase-js'
-import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 import { PUBLIC_SUPABASE_URL } from '$env/static/public'
 
 export async function POST({ request }) {
@@ -10,7 +10,7 @@ export async function POST({ request }) {
     return json({ error: 'Missing event_id.' }, { status: 400 })
   }
 
-  const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+  const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY)
 
   const { error } = await supabaseAdmin
     .from('events')

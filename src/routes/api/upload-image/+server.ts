@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit'
 import { createClient } from '@supabase/supabase-js'
-import { SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 import { PUBLIC_SUPABASE_URL } from '$env/static/public'
 
 const BUCKET = 'event-images'
@@ -24,7 +24,7 @@ export async function POST({ request }) {
     return json({ error: 'File too large. Max 5 MB.' }, { status: 400 })
   }
 
-  const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+  const supabaseAdmin = createClient(PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY)
 
   const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg'
   const filename = `${eventId}-${Date.now()}.${ext}`

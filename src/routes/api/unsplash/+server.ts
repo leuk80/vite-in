@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit'
-import { UNSPLASH_ACCESS_KEY } from '$env/static/private'
+import { env } from '$env/dynamic/private'
 
 export async function GET({ url }) {
   const q = url.searchParams.get('q') ?? ''
@@ -7,13 +7,13 @@ export async function GET({ url }) {
 
   if (!q.trim()) return json([])
 
-  if (!UNSPLASH_ACCESS_KEY) {
+  if (!env.UNSPLASH_ACCESS_KEY) {
     return json({ error: 'Unsplash API key not configured.' }, { status: 503 })
   }
 
   const res = await fetch(
     `https://api.unsplash.com/search/photos?query=${encodeURIComponent(q)}&per_page=12&page=${page}&orientation=landscape`,
-    { headers: { Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}` } }
+    { headers: { Authorization: `Client-ID ${env.UNSPLASH_ACCESS_KEY}` } }
   )
 
   if (!res.ok) return json([], { status: res.status })
