@@ -428,7 +428,7 @@
           <form on:submit|preventDefault={handleRSVP}>
             <label>
               {m.your_name()}
-              <input type="text" bind:value={name} required placeholder="Max Mustermann" />
+              <input type="text" bind:value={name} required placeholder={m.placeholder_name()} />
             </label>
             <div class="status-buttons">
               <button type="button" class:active={status === 'yes'} on:click={() => status = 'yes'}>✅ {m.yes()}</button>
@@ -437,11 +437,11 @@
             </div>
             <label>
               {m.email_for_reminders()}
-              <input type="email" bind:value={rsvpEmail} placeholder="du@beispiel.de" />
+              <input type="email" bind:value={rsvpEmail} placeholder={m.placeholder_email()} />
             </label>
             <label>
               {m.message_optional()}
-              <textarea bind:value={message} placeholder="Ich freue mich!"></textarea>
+              <textarea bind:value={message} placeholder={m.placeholder_message()}></textarea>
             </label>
             <button type="submit" class="submit-btn" disabled={loading}>
               {loading ? m.sending() : m.send_rsvp()}

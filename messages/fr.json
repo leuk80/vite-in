@@ -55,5 +55,12 @@
   "image_saved": "Image enregistrée!",
   "image_uploading": "Téléchargement...",
   "image_searching": "Recherche...",
-  "image_close": "Fermer"
+  "image_close": "Fermer",
+  "placeholder_title": "Mon anniversaire",
+  "placeholder_location": "1 Rue Principale, Paris",
+  "placeholder_description": "Venez tous...",
+  "placeholder_email": "vous@exemple.fr",
+  "placeholder_name": "Jean Dupont",
+  "placeholder_message": "J'ai hâte d'y être !",
+  "error_generic": "Une erreur s'est produite."
 }

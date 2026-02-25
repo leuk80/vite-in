@@ -55,5 +55,12 @@
   "image_saved": "¡Imagen guardada!",
   "image_uploading": "Subiendo...",
   "image_searching": "Buscando...",
-  "image_close": "Cerrar"
+  "image_close": "Cerrar",
+  "placeholder_title": "Mi fiesta de cumpleaños",
+  "placeholder_location": "Calle Mayor 1, Madrid",
+  "placeholder_description": "¡Venid todos...",
+  "placeholder_email": "tu@ejemplo.es",
+  "placeholder_name": "Juan García",
+  "placeholder_message": "¡Tengo muchas ganas!",
+  "error_generic": "Algo salió mal."
 }

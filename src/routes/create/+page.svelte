@@ -32,7 +32,7 @@
     })
 
     if (err) {
-      error = 'Etwas ist schiefgelaufen.'
+      error = m.error_generic()
       loading = false
       return
     }
@@ -47,7 +47,7 @@
   <form on:submit|preventDefault={handleSubmit}>
     <label>
       {m.event_title()} *
-      <input type="text" bind:value={title} required placeholder="Meine Geburtstagsparty" />
+      <input type="text" bind:value={title} required placeholder={m.placeholder_title()} />
     </label>
 
     <label>
@@ -57,17 +57,17 @@
 
     <label>
       {m.event_location()}
-      <input type="text" bind:value={location} placeholder="Musterstrasse 1, Zürich" />
+      <input type="text" bind:value={location} placeholder={m.placeholder_location()} />
     </label>
 
     <label>
       {m.event_description()}
-      <textarea bind:value={description} placeholder="Kommt alle vorbei..."></textarea>
+      <textarea bind:value={description} placeholder={m.placeholder_description()}></textarea>
     </label>
 
     <label>
       {m.your_email()} *
-      <input type="email" bind:value={email} required placeholder="du@beispiel.de" />
+      <input type="email" bind:value={email} required placeholder={m.placeholder_email()} />
     </label>
 
     {#if error}

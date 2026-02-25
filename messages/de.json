@@ -55,5 +55,12 @@
   "image_saved": "Bild gespeichert!",
   "image_uploading": "Wird hochgeladen...",
   "image_searching": "Suche läuft...",
-  "image_close": "Schließen"
+  "image_close": "Schließen",
+  "placeholder_title": "Meine Geburtstagsparty",
+  "placeholder_location": "Musterstrasse 1, Zürich",
+  "placeholder_description": "Kommt alle vorbei...",
+  "placeholder_email": "du@beispiel.de",
+  "placeholder_name": "Max Mustermann",
+  "placeholder_message": "Ich freue mich!",
+  "error_generic": "Etwas ist schiefgelaufen."
 }

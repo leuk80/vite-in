@@ -55,5 +55,12 @@
   "image_saved": "Immagine salvata!",
   "image_uploading": "Caricamento...",
   "image_searching": "Ricerca...",
-  "image_close": "Chiudi"
+  "image_close": "Chiudi",
+  "placeholder_title": "Il mio compleanno",
+  "placeholder_location": "Via Roma 1, Roma",
+  "placeholder_description": "Venite tutti...",
+  "placeholder_email": "tu@esempio.it",
+  "placeholder_name": "Mario Rossi",
+  "placeholder_message": "Non vedo l'ora!",
+  "error_generic": "Qualcosa è andato storto."
 }
