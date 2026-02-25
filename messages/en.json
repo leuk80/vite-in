@@ -44,5 +44,16 @@
   "feature_3_title": "Calendar export",
   "feature_3_text": "Guests can add the event to their calendar with one click.",
   "final_cta": "Ready for your next invitation?",
-  "nav_create": "Create invitation"
+  "nav_create": "Create invitation",
+  "image_btn": "Add / change image",
+  "image_tab_upload": "Upload",
+  "image_tab_unsplash": "Unsplash",
+  "image_unsplash_placeholder": "e.g. birthday, party, beach...",
+  "image_search": "Search",
+  "image_save": "Use this image",
+  "image_remove": "Remove image",
+  "image_saved": "Image saved!",
+  "image_uploading": "Uploading...",
+  "image_searching": "Searching...",
+  "image_close": "Close"
 }

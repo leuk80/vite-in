@@ -135,3 +135,36 @@ export const final_cta = () => `Bereit für deine nächste Einladung?`
 
 /* @__NO_SIDE_EFFECTS__ */
 export const nav_create = () => `Einladung erstellen`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_btn = () => `Bild hinzufügen / ändern`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_upload = () => `Hochladen`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_unsplash = () => `Unsplash`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_unsplash_placeholder = () => `z.B. Geburtstag, Party, Strand...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_search = () => `Suchen`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_save = () => `Bild übernehmen`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_remove = () => `Bild entfernen`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_saved = () => `Bild gespeichert!`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_uploading = () => `Wird hochgeladen...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_searching = () => `Suche läuft...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_close = () => `Schließen`

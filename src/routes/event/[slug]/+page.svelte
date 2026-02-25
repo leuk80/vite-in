@@ -26,6 +26,17 @@
   let remindSent = false
   let remindError = ''
 
+  // Image feature
+  let showImageModal = false
+  let imageTab: 'upload' | 'unsplash' = 'upload'
+  let imageFiles: FileList | undefined = undefined
+  let imageUploading = false
+  let imageSaved = false
+  let unsplashQuery = ''
+  let imageSearching = false
+  let unsplashResults: Array<{ id: string; thumb: string; full: string; author: string; authorUrl: string }> = []
+  let selectedPhoto: { id: string; thumb: string; full: string; author: string; authorUrl: string } | null = null
+
   onMount(async () => {
     const { data } = await supabase
       .from('events')
@@ -145,6 +156,80 @@
     if (data.error) { remindError = data.error } else { remindSent = true }
     remindLoading = false
   }
+
+  // --- Image feature ---
+
+  function openImageModal() {
+    imageTab = 'upload'
+    imageFiles = undefined
+    imageSaved = false
+    unsplashResults = []
+    selectedPhoto = null
+    unsplashQuery = ''
+    showImageModal = true
+  }
+
+  async function uploadImage() {
+    if (!imageFiles?.length) return
+    imageUploading = true
+    imageSaved = false
+
+    const formData = new FormData()
+    formData.append('file', imageFiles[0])
+    formData.append('event_id', event.id)
+
+    const res = await fetch('/api/upload-image', { method: 'POST', body: formData })
+    const data = await res.json()
+
+    if (data.url) {
+      event = { ...event, image_url: data.url }
+      imageSaved = true
+      setTimeout(() => { imageSaved = false; showImageModal = false }, 1500)
+    }
+    imageUploading = false
+  }
+
+  async function searchUnsplash() {
+    if (!unsplashQuery.trim()) return
+    imageSearching = true
+    unsplashResults = []
+    selectedPhoto = null
+
+    const res = await fetch(`/api/unsplash?q=${encodeURIComponent(unsplashQuery)}`)
+    unsplashResults = await res.json()
+    imageSearching = false
+  }
+
+  async function saveUnsplashImage() {
+    if (!selectedPhoto) return
+    imageUploading = true
+    imageSaved = false
+
+    const res = await fetch('/api/set-event-image', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event_id: event.id, image_url: selectedPhoto.full })
+    })
+
+    if (res.ok) {
+      event = { ...event, image_url: selectedPhoto.full }
+      imageSaved = true
+      setTimeout(() => { imageSaved = false; showImageModal = false }, 1500)
+    }
+    imageUploading = false
+  }
+
+  async function removeImage() {
+    const res = await fetch('/api/set-event-image', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event_id: event.id, image_url: null })
+    })
+    if (res.ok) {
+      event = { ...event, image_url: null }
+      showImageModal = false
+    }
+  }
 </script>
 
 {#if notFound}
@@ -176,11 +261,130 @@
     </div>
   {/if}
 
+  {#if showImageModal}
+    <div class="modal-overlay" on:click|self={() => showImageModal = false}>
+      <div class="modal image-modal">
+        <h2>🖼️ {m.image_btn()}</h2>
+
+        <div class="tab-bar">
+          <button
+            type="button"
+            class="tab-btn"
+            class:tab-active={imageTab === 'upload'}
+            on:click={() => imageTab = 'upload'}
+          >{m.image_tab_upload()}</button>
+          <button
+            type="button"
+            class="tab-btn"
+            class:tab-active={imageTab === 'unsplash'}
+            on:click={() => imageTab = 'unsplash'}
+          >{m.image_tab_unsplash()}</button>
+        </div>
+
+        {#if imageTab === 'upload'}
+          <div class="tab-content">
+            <label class="file-label">
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                bind:files={imageFiles}
+                class="file-input"
+              />
+              <span class="file-btn">📁 Datei auswählen</span>
+              {#if imageFiles?.length}
+                <span class="file-name">{imageFiles[0].name}</span>
+              {/if}
+            </label>
+            {#if imageSaved}
+              <p class="img-success">✅ {m.image_saved()}</p>
+            {:else}
+              <button
+                class="modal-save"
+                on:click={uploadImage}
+                disabled={!imageFiles?.length || imageUploading}
+              >
+                {imageUploading ? m.image_uploading() : m.image_save()}
+              </button>
+            {/if}
+          </div>
+
+        {:else}
+          <div class="tab-content">
+            <div class="search-row">
+              <input
+                type="text"
+                bind:value={unsplashQuery}
+                placeholder={m.image_unsplash_placeholder()}
+                on:keydown={(e) => e.key === 'Enter' && searchUnsplash()}
+              />
+              <button type="button" class="search-btn" on:click={searchUnsplash} disabled={imageSearching}>
+                {imageSearching ? m.image_searching() : m.image_search()}
+              </button>
+            </div>
+
+            {#if unsplashResults.length > 0}
+              <div class="photo-grid">
+                {#each unsplashResults as photo}
+                  <button
+                    type="button"
+                    class="photo-item"
+                    class:photo-selected={selectedPhoto?.id === photo.id}
+                    on:click={() => selectedPhoto = photo}
+                  >
+                    <img src={photo.thumb} alt={photo.author} loading="lazy" />
+                  </button>
+                {/each}
+              </div>
+
+              {#if selectedPhoto}
+                <p class="photo-credit">
+                  Foto von <a href={selectedPhoto.authorUrl} target="_blank" rel="noopener">{selectedPhoto.author}</a> auf Unsplash
+                </p>
+              {/if}
+
+              {#if imageSaved}
+                <p class="img-success">✅ {m.image_saved()}</p>
+              {:else}
+                <button
+                  class="modal-save"
+                  on:click={saveUnsplashImage}
+                  disabled={!selectedPhoto || imageUploading}
+                >
+                  {imageUploading ? m.image_uploading() : m.image_save()}
+                </button>
+              {/if}
+            {/if}
+          </div>
+        {/if}
+
+        <div class="modal-buttons modal-buttons-image">
+          {#if event.image_url}
+            <button type="button" class="modal-remove" on:click={removeImage}>
+              {m.image_remove()}
+            </button>
+          {/if}
+          <button type="button" class="modal-skip" on:click={() => showImageModal = false}>
+            {m.image_close()}
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <div class="page">
     <div class="card">
-      <div class="card-header">
+      <div
+        class="card-header"
+        class:card-header-image={!!event.image_url}
+        style={event.image_url
+          ? `background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('${event.image_url}') center/cover no-repeat`
+          : ''}
+      >
         <p class="label">{m.invited()}</p>
         <h1>{event.title}</h1>
+        {#if event.image_url && event.image_url.includes('unsplash.com')}
+          <p class="header-credit">Photo: Unsplash</p>
+        {/if}
       </div>
 
       <div class="card-body">
@@ -283,6 +487,12 @@
           </button>
           {#if remindError}<p class="remind-error">{remindError}</p>{/if}
         </div>
+
+        <div class="image-section">
+          <button class="image-edit-btn" on:click={openImageModal}>
+            🖼️ {m.image_btn()}
+          </button>
+        </div>
       {/if}
 
       {#if !event.is_paid}
@@ -298,9 +508,12 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   .page { min-height: 100vh; background: #f5f5f3; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
   .card { background: white; border-radius: 16px; width: 100%; max-width: 480px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 24px rgba(0,0,0,0.06); overflow: hidden; }
-  .card-header { padding: 2.5rem 2rem 2rem; background: #111; color: white; }
+  .card-header { padding: 2.5rem 2rem 2rem; background: #111; color: white; transition: padding 0.2s; }
+  .card-header-image { padding: 3.5rem 2rem 2rem; }
   .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: #999; margin-bottom: 0.6rem; }
+  .card-header-image .label { color: rgba(255,255,255,0.7); }
   .card-header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; line-height: 1.2; }
+  .header-credit { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 0.8rem; }
   .card-body { padding: 2rem; }
   .meta-block { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
   .meta-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.95rem; color: #444; }
@@ -337,11 +550,14 @@
   .upgrade-text { font-size: 0.8rem; color: #888; }
   .upgrade-btn { padding: 0.5rem 1.2rem; background: #111; color: white; border: none; border-radius: 6px; font-size: 0.85rem; cursor: pointer; white-space: nowrap; font-family: inherit; }
   .upgrade-btn:hover { background: #333; }
-  .remind-section { margin: 0 2rem 1.5rem; }
+  .remind-section { margin: 0 2rem 0.5rem; }
   .remind-btn { width: 100%; padding: 0.7rem; background: white; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-family: inherit; color: #444; transition: all 0.15s; }
   .remind-btn:hover { border-color: #111; color: #111; }
   .remind-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .remind-error { font-size: 0.85rem; color: red; margin-top: 0.5rem; }
+  .image-section { margin: 0.5rem 2rem 1.5rem; }
+  .image-edit-btn { width: 100%; padding: 0.7rem; background: white; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-family: inherit; color: #444; transition: all 0.15s; }
+  .image-edit-btn:hover { border-color: #111; color: #111; }
   .card-footer { padding: 1.2rem 2rem; border-top: 1px solid #f0f0f0; text-align: center; }
   .card-footer a { font-size: 0.8rem; color: #bbb; text-decoration: none; }
   .card-footer a:hover { color: #888; }
@@ -350,6 +566,8 @@
   .share-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.6rem 0.8rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-family: inherit; border: 1px solid #e0e0e0; background: white; color: #444; transition: all 0.15s; }
   .share-btn:hover { border-color: #111; color: #111; }
   .share-btn.whatsapp:hover { border-color: #25D366; color: #25D366; }
+
+  /* Modals */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
   .modal { background: white; border-radius: 16px; padding: 2rem; width: 100%; max-width: 420px; }
   .modal h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
@@ -364,4 +582,31 @@
   .modal-skip { padding: 0.6rem 1rem; background: white; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; }
   .modal-save { padding: 0.6rem 1.2rem; background: #111; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; }
   .modal-save:disabled { opacity: 0.5; cursor: not-allowed; }
+  .modal-remove { padding: 0.6rem 1rem; background: white; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; color: #c00; border-color: #fcc; }
+  .modal-remove:hover { background: #fff5f5; border-color: #c00; }
+
+  /* Image modal specifics */
+  .image-modal { max-height: 90vh; overflow-y: auto; }
+  .tab-bar { display: flex; gap: 0.3rem; margin-bottom: 1.2rem; background: #f5f5f5; border-radius: 8px; padding: 0.25rem; }
+  .tab-btn { flex: 1; padding: 0.5rem; border: none; background: transparent; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; color: #666; transition: all 0.15s; }
+  .tab-active { background: white; color: #111; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .tab-content { margin-bottom: 1.2rem; }
+  .file-label { display: flex; flex-direction: column; gap: 0.6rem; cursor: pointer; }
+  .file-input { display: none; }
+  .file-btn { display: inline-block; padding: 0.65rem 1rem; border: 1px dashed #ccc; border-radius: 8px; font-size: 0.9rem; color: #555; text-align: center; transition: border-color 0.15s; cursor: pointer; }
+  .file-btn:hover { border-color: #111; color: #111; }
+  .file-name { font-size: 0.8rem; color: #888; }
+  .search-row { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .search-row input { flex: 1; }
+  .search-btn { padding: 0.65rem 1rem; background: #111; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-family: inherit; white-space: nowrap; }
+  .search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; max-height: 260px; overflow-y: auto; margin-bottom: 0.8rem; border-radius: 8px; }
+  .photo-item { padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; cursor: pointer; background: #f0f0f0; aspect-ratio: 4/3; }
+  .photo-item:hover { border-color: #888; }
+  .photo-selected { border-color: #111 !important; }
+  .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-credit { font-size: 0.75rem; color: #aaa; margin-bottom: 0.8rem; }
+  .photo-credit a { color: #888; }
+  .img-success { color: green; font-size: 0.9rem; font-weight: 500; text-align: center; padding: 0.5rem 0; }
+  .modal-buttons-image { margin-top: 0.5rem; justify-content: space-between; }
 </style>

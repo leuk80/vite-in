@@ -44,5 +44,16 @@
   "feature_3_title": "Kalender-Export",
   "feature_3_text": "Gäste können das Event mit einem Klick in ihren Kalender speichern.",
   "final_cta": "Bereit für deine nächste Einladung?",
-  "nav_create": "Einladung erstellen"
+  "nav_create": "Einladung erstellen",
+  "image_btn": "Bild hinzufügen / ändern",
+  "image_tab_upload": "Hochladen",
+  "image_tab_unsplash": "Unsplash",
+  "image_unsplash_placeholder": "z.B. Geburtstag, Party, Strand...",
+  "image_search": "Suchen",
+  "image_save": "Bild übernehmen",
+  "image_remove": "Bild entfernen",
+  "image_saved": "Bild gespeichert!",
+  "image_uploading": "Wird hochgeladen...",
+  "image_searching": "Suche läuft...",
+  "image_close": "Schließen"
 }

@@ -135,3 +135,36 @@ export const final_cta = () => `Pronto per il tuo prossimo invito?`
 
 /* @__NO_SIDE_EFFECTS__ */
 export const nav_create = () => `Crea invito`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_btn = () => `Aggiungi / cambia immagine`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_upload = () => `Carica`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_unsplash = () => `Unsplash`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_unsplash_placeholder = () => `es. compleanno, festa, spiaggia...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_search = () => `Cerca`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_save = () => `Usa questa immagine`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_remove = () => `Rimuovi immagine`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_saved = () => `Immagine salvata!`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_uploading = () => `Caricamento...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_searching = () => `Ricerca...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_close = () => `Chiudi`

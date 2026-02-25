@@ -135,3 +135,36 @@ export const final_cta = () => `Prêt pour votre prochaine invitation?`
 
 /* @__NO_SIDE_EFFECTS__ */
 export const nav_create = () => `Créer une invitation`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_btn = () => `Ajouter / changer l'image`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_upload = () => `Télécharger`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_tab_unsplash = () => `Unsplash`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_unsplash_placeholder = () => `ex. anniversaire, fête, plage...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_search = () => `Chercher`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_save = () => `Utiliser cette image`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_remove = () => `Supprimer l'image`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_saved = () => `Image enregistrée!`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_uploading = () => `Téléchargement...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_searching = () => `Recherche...`
+
+/* @__NO_SIDE_EFFECTS__ */
+export const image_close = () => `Fermer`
