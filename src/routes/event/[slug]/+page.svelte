@@ -4,6 +4,7 @@
   import { onMount } from 'svelte'
   import * as m from '$lib/paraglide/messages'
   import { languageTag } from '$lib/paraglide/runtime'
+  import { i18n } from '$lib/i18n'
 
   let event: any = null
   let notFound = false
@@ -103,7 +104,7 @@
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event_id: event.id, slug: event.slug })
+      body: JSON.stringify({ event_id: event.id, slug: event.slug, lang: languageTag() })
     })
     const { url } = await res.json()
     window.location.href = url
@@ -129,7 +130,7 @@
       return
     }
     slugSuccess = true
-    setTimeout(() => { window.location.href = `/event/${newSlug}` }, 1500)
+    setTimeout(() => { window.location.href = i18n.resolveRoute(`/event/${newSlug}`, languageTag()) }, 1500)
   }
 
   async function sendReminder() {
