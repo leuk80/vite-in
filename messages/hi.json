@@ -62,5 +62,7 @@
   "placeholder_email": "user@udaharan.in",
   "placeholder_name": "राहुल शर्मा",
   "placeholder_message": "ज़रूर आऊँगा, बहुत उत्साहित हूँ!",
-  "error_generic": "कुछ गलत हो गया।"
+  "error_generic": "कुछ गलत हो गया।",
+  "wallet_btn": "Apple Wallet में जोड़ें",
+  "wallet_ticket_btn": "मेरा टिकट Apple Wallet में"
 }

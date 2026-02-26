@@ -62,5 +62,7 @@
   "placeholder_email": "user@example.in",
   "placeholder_name": "ದೀಪಾ ಕುಮಾರ್",
   "placeholder_message": "ಖಂಡಿತ ಬರುತ್ತೇನೆ, ತುಂಬಾ ಉತ್ಸಾಹವಾಗಿದೆ!",
-  "error_generic": "ಏನೋ ತಪ್ಪಾಯಿತು."
+  "error_generic": "ಏನೋ ತಪ್ಪಾಯಿತು.",
+  "wallet_btn": "Apple Wallet ಗೆ ಸೇರಿಸಿ",
+  "wallet_ticket_btn": "ನನ್ನ ಟಿಕೆಟ್ Apple Wallet ಗೆ"
 }

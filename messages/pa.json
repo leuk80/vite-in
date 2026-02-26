@@ -62,5 +62,7 @@
   "placeholder_email": "user@misaal.in",
   "placeholder_name": "ਗੁਰਪ੍ਰੀਤ ਸਿੰਘ",
   "placeholder_message": "ਜ਼ਰੂਰ ਆਵਾਂਗਾ, ਬਹੁਤ ਖੁਸ਼ੀ ਹੋਈ!",
-  "error_generic": "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ।"
+  "error_generic": "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ।",
+  "wallet_btn": "Apple Wallet ਵਿੱਚ ਜੋੜੋ",
+  "wallet_ticket_btn": "ਮੇਰੀ ਟਿਕਟ Apple Wallet ਵਿੱਚ"
 }

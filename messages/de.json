@@ -62,5 +62,7 @@
   "placeholder_email": "du@beispiel.de",
   "placeholder_name": "Max Mustermann",
   "placeholder_message": "Ich freue mich!",
-  "error_generic": "Etwas ist schiefgelaufen."
+  "error_generic": "Etwas ist schiefgelaufen.",
+  "wallet_btn": "Zu Apple Wallet hinzufügen",
+  "wallet_ticket_btn": "Mein Ticket zu Apple Wallet"
 }

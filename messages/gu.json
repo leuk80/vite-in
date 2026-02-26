@@ -62,5 +62,7 @@
   "placeholder_email": "user@udaharan.in",
   "placeholder_name": "મીતા પટેલ",
   "placeholder_message": "ચોક્કસ આવીશ, ખૂબ ઉત્સાહ છે!",
-  "error_generic": "કંઈક ખોટું થઈ ગયું."
+  "error_generic": "કંઈક ખોટું થઈ ગયું.",
+  "wallet_btn": "Apple Wallet માં ઉમેરો",
+  "wallet_ticket_btn": "મારી ટિકિટ Apple Wallet માં"
 }

@@ -62,5 +62,7 @@
   "placeholder_email": "user@udaharan.com.bd",
   "placeholder_name": "রাহেলা বেগম",
   "placeholder_message": "অবশ্যই আসব, খুব উত্তেজিত!",
-  "error_generic": "কিছু একটা ভুল হয়েছে।"
+  "error_generic": "কিছু একটা ভুল হয়েছে।",
+  "wallet_btn": "Apple Wallet-এ যোগ করুন",
+  "wallet_ticket_btn": "আমার টিকিট Apple Wallet-এ"
 }
