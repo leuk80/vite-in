@@ -62,5 +62,7 @@
   "placeholder_email": "tu@ejemplo.es",
   "placeholder_name": "Juan García",
   "placeholder_message": "¡Tengo muchas ganas!",
-  "error_generic": "Algo salió mal."
+  "error_generic": "Algo salió mal.",
+  "wallet_btn": "Añadir a Apple Wallet",
+  "wallet_ticket_btn": "Mi entrada a Apple Wallet"
 }

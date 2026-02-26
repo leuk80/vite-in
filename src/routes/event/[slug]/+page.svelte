@@ -403,7 +403,13 @@
         {#if event.description}
           <p class="description">{event.description}</p>
         {/if}
-        <button class="calendar-btn" on:click={downloadICS}>📅 {m.add_to_calendar()}</button>
+        <div class="action-row">
+          <button class="calendar-btn" on:click={downloadICS}>📅 {m.add_to_calendar()}</button>
+          <a class="wallet-btn" href="/api/wallet/{event.slug}" download="{event.slug}-organizer.pkpass">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 7V5a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zm-2-2v2H6V5h12zm2 14H4V9h16v10zm-5-5a1 1 0 110 2 1 1 0 010-2z"/></svg>
+            {m.wallet_btn()}
+          </a>
+        </div>
         <div class="share-row">
           <button class="share-btn whatsapp" on:click={shareWhatsApp}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.129 1.535 5.865L.057 23.272a.75.75 0 00.916.919l5.538-1.453A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.52-5.187-1.427l-.374-.22-3.862 1.013 1.04-3.742-.243-.389A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
@@ -422,6 +428,14 @@
           <div class="success">
             <span class="success-icon">🎉</span>
             <p>{m.thank_you()}</p>
+            <a
+              class="wallet-ticket-btn"
+              href="/api/wallet/{event.slug}?name={encodeURIComponent(name)}&status={status}"
+              download="{event.slug}-ticket.pkpass"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 7V5a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zm-2-2v2H6V5h12zm2 14H4V9h16v10zm-5-5a1 1 0 110 2 1 1 0 010-2z"/></svg>
+              {m.wallet_ticket_btn()}
+            </a>
           </div>
         {:else}
           <h2>{m.can_you_come()}</h2>
@@ -519,8 +533,13 @@
   .meta-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.95rem; color: #444; }
   .meta-icon { font-size: 1rem; }
   .description { font-size: 0.95rem; line-height: 1.7; color: #555; margin-bottom: 1.5rem; }
-  .calendar-btn { padding: 0.5rem 1rem; background: white; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-size: 0.85rem; color: #444; transition: border-color 0.15s; }
+  .action-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0; }
+  .calendar-btn { padding: 0.5rem 1rem; background: white; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-size: 0.85rem; color: #444; transition: border-color 0.15s; font-family: inherit; }
   .calendar-btn:hover { border-color: #111; color: #111; }
+  .wallet-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; background: #111; color: white; border-radius: 6px; font-size: 0.85rem; text-decoration: none; transition: background 0.15s; font-family: inherit; }
+  .wallet-btn:hover { background: #333; }
+  .wallet-ticket-btn { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem; padding: 0.6rem 1.2rem; background: #111; color: white; border-radius: 8px; font-size: 0.85rem; text-decoration: none; transition: background 0.15s; font-family: inherit; }
+  .wallet-ticket-btn:hover { background: #333; }
   .divider { border-top: 1px solid #f0f0f0; }
   .rsvp-section { padding: 2rem; }
   .rsvp-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }

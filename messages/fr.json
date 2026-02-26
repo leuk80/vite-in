@@ -62,5 +62,7 @@
   "placeholder_email": "vous@exemple.fr",
   "placeholder_name": "Jean Dupont",
   "placeholder_message": "J'ai hâte d'y être !",
-  "error_generic": "Une erreur s'est produite."
+  "error_generic": "Une erreur s'est produite.",
+  "wallet_btn": "Ajouter à Apple Wallet",
+  "wallet_ticket_btn": "Mon billet dans Apple Wallet"
 }

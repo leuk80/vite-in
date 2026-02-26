@@ -62,5 +62,7 @@
   "placeholder_email": "tu@esempio.it",
   "placeholder_name": "Mario Rossi",
   "placeholder_message": "Non vedo l'ora!",
-  "error_generic": "Qualcosa è andato storto."
+  "error_generic": "Qualcosa è andato storto.",
+  "wallet_btn": "Aggiungi ad Apple Wallet",
+  "wallet_ticket_btn": "Il mio biglietto in Apple Wallet"
 }
