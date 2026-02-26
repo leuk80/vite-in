@@ -405,10 +405,6 @@
         {/if}
         <div class="action-row">
           <button class="calendar-btn" on:click={downloadICS}>📅 {m.add_to_calendar()}</button>
-          <a class="wallet-btn" href="/api/wallet/{event.slug}" download="{event.slug}-organizer.pkpass">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 7V5a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zm-2-2v2H6V5h12zm2 14H4V9h16v10zm-5-5a1 1 0 110 2 1 1 0 010-2z"/></svg>
-            {m.wallet_btn()}
-          </a>
         </div>
         <div class="share-row">
           <button class="share-btn whatsapp" on:click={shareWhatsApp}>
@@ -428,14 +424,6 @@
           <div class="success">
             <span class="success-icon">🎉</span>
             <p>{m.thank_you()}</p>
-            <a
-              class="wallet-ticket-btn"
-              href="/api/wallet/{event.slug}?name={encodeURIComponent(name)}&status={status}"
-              download="{event.slug}-ticket.pkpass"
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 7V5a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zm-2-2v2H6V5h12zm2 14H4V9h16v10zm-5-5a1 1 0 110 2 1 1 0 010-2z"/></svg>
-              {m.wallet_ticket_btn()}
-            </a>
           </div>
         {:else}
           <h2>{m.can_you_come()}</h2>
