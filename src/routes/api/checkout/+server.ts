@@ -10,7 +10,7 @@ export async function POST({ request }) {
 
   console.log('checkout - event_id:', event_id, 'slug:', slug, 'lang:', lang)
 
-  const eventPath = i18n.resolveRoute(`/event/${slug}`, lang ?? 'en')
+  const eventPath = i18n.resolveRoute(`/event/${slug}/host`, lang ?? 'en')
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],

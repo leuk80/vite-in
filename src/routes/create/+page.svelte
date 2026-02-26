@@ -37,7 +37,7 @@
       return
     }
 
-    goto(`/event/${slug}`)
+    goto(`/event/${slug}/host`)
   }
 </script>
 
