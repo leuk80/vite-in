@@ -10,17 +10,19 @@ const resend = new Resend(RESEND_API_KEY)
 export async function POST({ request }) {
   const { event_id, name, status, message, email } = await request.json()
 
-  const { error: insertError } = await supabase.from('rsvps').insert({
+  const { data: rsvp, error: insertError } = await supabase.from('rsvps').insert({
     event_id,
     name,
     status,
     message,
     email
-  })
+  }).select('id').single()
 
   if (insertError) {
     return json({ success: false }, { status: 500 })
   }
+
+  const rsvpId = rsvp?.id
 
   // Event-Daten holen um Ersteller-Email zu finden
   const { data: event } = await supabase
@@ -43,7 +45,7 @@ export async function POST({ request }) {
         <p><strong>${name}</strong> hat ${statusText} gegeben.</p>
         ${message ? `<p>Nachricht: "${message}"</p>` : ''}
         <hr>
-        <p><a href="https://vite.in/event/${event.slug}">Alle Rückmeldungen ansehen</a></p>
+        <p><a href="https://vite.in/event/${event.slug}/host">Alle Rückmeldungen ansehen</a></p>
       `
     })
 
@@ -130,7 +132,7 @@ export async function POST({ request }) {
             <p style="font-size:0.85rem;color:#888;margin-bottom:1.5rem">${attachmentNote}</p>
 
             <hr style="border:none;border-top:1px solid #f0f0f0;margin:1.5rem 0">
-            <a href="https://vite.in/event/${event.slug}" style="display:inline-block;padding:0.6rem 1.2rem;background:#111;color:white;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:500">Event-Seite öffnen →</a>
+            <a href="https://vite.in/event/${event.slug}/confirm/${rsvpId}" style="display:inline-block;padding:0.6rem 1.2rem;background:#111;color:white;text-decoration:none;border-radius:6px;font-size:0.85rem;font-weight:500">Meine Anmeldung ansehen →</a>
             <p style="font-size:0.75rem;color:#bbb;margin-top:2rem">Erstellt mit <a href="https://vite.in" style="color:#bbb">vite.in</a></p>
           </div>
         `,
@@ -139,5 +141,5 @@ export async function POST({ request }) {
     }
   }
 
-  return json({ success: true })
+  return json({ success: true, rsvp_id: rsvpId })
 }
